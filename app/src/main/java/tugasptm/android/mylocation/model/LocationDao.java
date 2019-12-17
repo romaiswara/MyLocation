@@ -1,4 +1,4 @@
-package fitri.android.mylocation.model;
+package tugasptm.android.mylocation.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

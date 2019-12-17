@@ -1,4 +1,4 @@
-package fitri.android.mylocation.view;
+package tugasptm.android.mylocation.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +15,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import fitri.android.mylocation.R;
-import fitri.android.mylocation.model.LocationDao;
-import fitri.android.mylocation.model.LocationDb;
+import tugasptm.android.mylocation.R;
+import tugasptm.android.mylocation.model.LocationDao;
+import tugasptm.android.mylocation.model.LocationDb;
 
 public class DetailFragment extends Fragment {
     LocationDao locationDao;

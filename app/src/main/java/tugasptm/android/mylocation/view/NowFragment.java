@@ -1,4 +1,4 @@
-package fitri.android.mylocation.view;
+package tugasptm.android.mylocation.view;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -29,9 +29,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import fitri.android.mylocation.R;
-import fitri.android.mylocation.model.LocationDao;
-import fitri.android.mylocation.model.LocationDb;
+import tugasptm.android.mylocation.R;
+import tugasptm.android.mylocation.model.LocationDao;
+import tugasptm.android.mylocation.model.LocationDb;
 
 public class NowFragment extends Fragment {
 

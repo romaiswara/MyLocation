@@ -1,4 +1,4 @@
-package fitri.android.mylocation;
+package tugasptm.android.mylocation;
 
 import org.junit.Test;
 

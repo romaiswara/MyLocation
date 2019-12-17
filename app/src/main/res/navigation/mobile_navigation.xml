@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_now"
-        android:name="fitri.android.mylocation.view.NowFragment"
+        android:name="tugasptm.android.mylocation.view.NowFragment"
         android:label="Lokasi Sekarang"
         tools:layout="@layout/fragment_now" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/nav_save"
-        android:name="fitri.android.mylocation.view.SaveFragment"
+        android:name="tugasptm.android.mylocation.view.SaveFragment"
         android:label="Daftar Lokasi Tersimpan"
         tools:layout="@layout/fragment_save" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_detail"
-        android:name="fitri.android.mylocation.view.DetailFragment"
+        android:name="tugasptm.android.mylocation.view.DetailFragment"
         android:label="Detail Lokasi"
         tools:layout="@layout/fragment_detail" />
 

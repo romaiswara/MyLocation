@@ -1,4 +1,4 @@
-package fitri.android.mylocation.adapter;
+package tugasptm.android.mylocation.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import fitri.android.mylocation.R;
-import fitri.android.mylocation.model.LocationDao;
+import tugasptm.android.mylocation.R;
+import tugasptm.android.mylocation.model.LocationDao;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
     Context context;

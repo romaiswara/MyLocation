@@ -1,4 +1,4 @@
-package fitri.android.mylocation.view;
+package tugasptm.android.mylocation.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,10 +18,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
-import fitri.android.mylocation.R;
-import fitri.android.mylocation.adapter.LocationAdapter;
-import fitri.android.mylocation.model.LocationDao;
-import fitri.android.mylocation.model.LocationDb;
+import tugasptm.android.mylocation.R;
+import tugasptm.android.mylocation.adapter.LocationAdapter;
+import tugasptm.android.mylocation.model.LocationDao;
+import tugasptm.android.mylocation.model.LocationDb;
 
 public class SaveFragment extends Fragment {
     SwipeRefreshLayout refresh;

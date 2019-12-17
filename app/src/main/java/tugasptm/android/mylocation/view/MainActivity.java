@@ -1,4 +1,4 @@
-package fitri.android.mylocation.view;
+package tugasptm.android.mylocation.view;
 
 import android.Manifest;
 import android.content.IntentSender;
@@ -35,7 +35,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-import fitri.android.mylocation.R;
+import tugasptm.android.mylocation.R;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;

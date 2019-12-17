@@ -1,4 +1,4 @@
-package fitri.android.mylocation;
+package tugasptm.android.mylocation;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("fitri.android.mylocation", appContext.getPackageName());
+        assertEquals("tugasptm.android.mylocation", appContext.getPackageName());
     }
 }
