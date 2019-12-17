@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -22,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -35,7 +35,7 @@ import fitri.android.mylocation.model.LocationDb;
 
 public class NowFragment extends Fragment {
 
-    Button btnSave,btnLoad;
+    Button btnSave,btnLoad, btnClear;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LatLng latLng;
@@ -48,6 +48,9 @@ public class NowFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_now, container, false);
 
+        initMap();
+        getCurrentLocation();
+
         btnSave = root.findViewById(R.id.btn_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,12 +62,18 @@ public class NowFragment extends Fragment {
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(getView()).navigate(R.id.action_nav_now_to_nav_save);
+                // add remark
+                loadMarker();
             }
         });
-
-        initMap();
-        getCurrentLocation();
+        btnClear = root.findViewById(R.id.btn_clear);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // hapus remark
+                clearMarker();
+            }
+        });
         return root;
     }
 
@@ -80,6 +89,19 @@ public class NowFragment extends Fragment {
                 getCurrentLocation();
             }
         });
+    }
+
+    private void loadMarker(){
+        map.clear();
+        List<LocationDao> list = LocationDb.getDatabase(getActivity()).interfaceDao().getAllLocation();
+        for (int i = 0; i < list.size(); i++) {
+            LatLng latLngData = new LatLng(list.get(i).getLat(), list.get(i).getLng());
+            map.addMarker(new MarkerOptions().position(latLngData).title(list.get(i).getKota()));
+        }
+    }
+
+    private void clearMarker(){
+        map.clear();
     }
 
     private void simpanLokasi(){
