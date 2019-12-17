@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_now">
+
+    <fragment
+        android:id="@+id/nav_now"
+        android:name="fitri.android.mylocation.view.NowFragment"
+        android:label="Lokasi Sekarang"
+        tools:layout="@layout/fragment_now" >
+        <action
+            android:id="@+id/action_nav_now_to_nav_save"
+            app:destination="@id/nav_save" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_save"
+        android:name="fitri.android.mylocation.view.SaveFragment"
+        android:label="Daftar Lokasi Tersimpan"
+        tools:layout="@layout/fragment_save" >
+        <action
+            android:id="@+id/action_nav_save_to_nav_detail"
+            app:destination="@id/nav_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_detail"
+        android:name="fitri.android.mylocation.view.DetailFragment"
+        android:label="Detail Lokasi"
+        tools:layout="@layout/fragment_detail" />
+
+</navigation>
