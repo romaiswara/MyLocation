@@ -7,7 +7,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {LocationDao.class}, version = 1, exportSchema = false)
+@Database(entities = {Location.class}, version = 1, exportSchema = false)
 public abstract class LocationDb extends RoomDatabase {
 
     public abstract InterfaceDao interfaceDao();
@@ -19,7 +19,7 @@ public abstract class LocationDb extends RoomDatabase {
             synchronized (LocationDb.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            LocationDb.class, "location_database")
+                            LocationDb.class, "location_database.db")
                             .allowMainThreadQueries()
                             .build();
                 }

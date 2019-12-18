@@ -2,7 +2,6 @@ package tugasptm.android.mylocation.view;
 
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,9 +28,15 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tugasptm.android.mylocation.R;
-import tugasptm.android.mylocation.model.LocationDao;
-import tugasptm.android.mylocation.model.LocationDb;
+import tugasptm.android.mylocation.model.Location;
+import tugasptm.android.mylocation.model.response.GeneralResponse;
+import tugasptm.android.mylocation.model.response.LocationResponse;
+import tugasptm.android.mylocation.network.ApiClient;
+import tugasptm.android.mylocation.network.LokasiService;
 
 public class NowFragment extends Fragment {
 
@@ -44,9 +49,13 @@ public class NowFragment extends Fragment {
     String nama, kota;
     double lat, lng;
 
+    LokasiService service;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_now, container, false);
+
+        service = ApiClient.getClient().create(LokasiService.class);
 
         initMap();
         getCurrentLocation();
@@ -55,7 +64,7 @@ public class NowFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                simpanLokasi();
+                insertLokasi(nama, kota, lat, lng);
             }
         });
         btnLoad = root.findViewById(R.id.btn_load);
@@ -70,8 +79,7 @@ public class NowFragment extends Fragment {
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // hapus remark
-                clearMarker();
+                map.clear();
             }
         });
         return root;
@@ -93,23 +101,32 @@ public class NowFragment extends Fragment {
 
     private void loadMarker(){
         map.clear();
-        List<LocationDao> list = LocationDb.getDatabase(getActivity()).interfaceDao().getAllLocation();
-        for (int i = 0; i < list.size(); i++) {
-            LatLng latLngData = new LatLng(list.get(i).getLat(), list.get(i).getLng());
-            map.addMarker(new MarkerOptions().position(latLngData).title(list.get(i).getKota()));
-        }
-    }
+        Call<LocationResponse> call = service.read();
+        call.enqueue(new Callback<LocationResponse>() {
+            @Override
+            public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body().isSuccess()){
+                        List<Location> list = response.body().getResult();
+                        for (int i = 0; i < list.size(); i++) {
+                            LatLng latLngData = new LatLng(list.get(i).getLat(), list.get(i).getLng());
+                            map.addMarker(new MarkerOptions().position(latLngData).title(list.get(i).getKota()));
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Gagal Load Data", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-    private void clearMarker(){
-        map.clear();
-    }
+            @Override
+            public void onFailure(Call<LocationResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
 
-    private void simpanLokasi(){
-        LocationDao dao = new LocationDao(nama, kota, lat, lng);
-        LocationDb.getDatabase(getActivity()).interfaceDao().insertLocation(dao);
-        Toast.makeText(getActivity(), "Simpan Lokasi Berhasil : "+LocationDb.getDatabase(getActivity()).interfaceDao().getAllLocation().size(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
 
     private void getCurrentLocation(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -120,7 +137,7 @@ public class NowFragment extends Fragment {
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         try {
-                            Location currentLocation = (Location) task.getResult();
+                            android.location.Location currentLocation = (android.location.Location) task.getResult();
                             latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
                             nama = getAddress(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -163,5 +180,24 @@ public class NowFragment extends Fragment {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private void insertLokasi(String nama, String kota, double lat, double lng){
+        Call<GeneralResponse> call = service.insert(nama, kota, lat, lng);
+        call.enqueue(new Callback<GeneralResponse>() {
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                if (response.isSuccessful()){
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

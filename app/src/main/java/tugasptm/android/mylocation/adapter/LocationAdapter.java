@@ -13,21 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tugasptm.android.mylocation.R;
-import tugasptm.android.mylocation.model.LocationDao;
+import tugasptm.android.mylocation.model.Location;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
     Context context;
-    List<LocationDao> list;
+    List<Location> list;
     itemClickListener listener;
 
-    public LocationAdapter(Context context, List<LocationDao> list, itemClickListener listener) {
+    public LocationAdapter(Context context, List<Location> list, itemClickListener listener) {
         this.context = context;
         this.list = list;
         this.listener = listener;
     }
 
-    public void updateData(List<LocationDao> locationDaos){
-        this.list = locationDaos;
+    public void updateData(List<Location> locations){
+        this.list = locations;
         notifyDataSetChanged();
     }
 
@@ -40,20 +40,20 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final LocationDao locationDao = list.get(position);
-        holder.tvName.setText(locationDao.getNama());
-        holder.tvKet.setText(locationDao.getKota());
-        holder.tvLatLng.setText(locationDao.getLat()+" , "+locationDao.getLng());
+        final Location location = list.get(position);
+        holder.tvName.setText(location.getNama());
+        holder.tvKet.setText(location.getKota());
+        holder.tvLatLng.setText(location.getLat()+" , "+ location.getLng());
         holder.ivArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemClick(locationDao, false);
+                listener.onItemClick(location, false);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                listener.onItemClick(locationDao, true);
+                listener.onItemClick(location, true);
                 return true;
             }
         });
@@ -78,6 +78,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     }
 
     public interface itemClickListener{
-        void onItemClick(LocationDao locationDao, boolean isLongClick);
+        void onItemClick(Location location, boolean isLongClick);
     }
 }

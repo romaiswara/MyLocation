@@ -4,13 +4,13 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class LocationDao {
+public class Location {
     @PrimaryKey(autoGenerate = true)
     int id;
     String nama, kota;
     double lat, lng;
 
-    public LocationDao(String nama, String kota, double lat, double lng) {
+    public Location(String nama, String kota, double lat, double lng) {
         this.nama = nama;
         this.kota = kota;
         this.lat = lat;
